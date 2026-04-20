@@ -1,4 +1,5 @@
 ## SQL Query Input
+The SQL Query test part (Q1- Q10) is in **../SQLQuery/query_interview_problems.sql** file
 SQL Query problem 1-9 were pretty straight-forward.
 
 For problem 10, I had to take a couple of tries to make sure I am covering the problem spec thoroughly. <br/>
