@@ -30,8 +30,8 @@ Business rules: Create a model that allows people to track Tasks over time. <br/
 <br/>
 -Table definitions with keys. <br/>
 -Brief justification for relationships. <br/>
--An ER Model Diagram that clearly satisfy the above requirements
-&lt;/**output_format**&gt;" <br/>
+-An ER Model Diagram that clearly satisfy the above requirements. <br/>
+&lt;/**output_format**&gt;" 
 
 Utilizing this PROMPT, the model generated ER Diagram with expected entities, in addition to date and status dimension. However, the FACT tables were missing the audit columns in the first attempt of the PROMPT as I didn't include them in the requirements but later on when I verified the schema, I improved the prompt to add those as part of requirements. This was the only thing missing in the first PROMPT.
 The model also generated SEED input for the Diension tables which I am including in the DML Script.
