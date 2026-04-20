@@ -7,7 +7,7 @@ Write a query to return all patients who are active.
 */
 SELECT	*
 FROM	Patient
-WHERE	active = 1;		--TRUE for PostGres
+WHERE	active = 1;		-- Replace 1 with TRUE for PostGresSQL
 
 /*
 2. Find encounters for a specific patient
@@ -15,7 +15,7 @@ Given a patient_id, retrieve all encounters for that patient, including the stat
 ###NOT ORDER IN ANY PARTICULAR ORDER*/
 SELECT	patient_id, Status, encounter_date
 FROM	Encounter
-WHERE	patient_id = '' -- fill-in the patient_id
+WHERE	patient_id = '518A1566-2A4A-42CE-ADED-445868576FD5' -- fill-in the patient_id
 
 /*
 3. List all observations recorded for a patient
@@ -23,7 +23,7 @@ Write a query to fetch all observations for a given patient_id, showing the obse
 ###NOT ORDER IN ANY PARTICULAR ORDER*/
 SELECT	patient_id, type as observation_type, value, unit, recorded_at as recorded_date
 FROM	Observation
-WHERE	patient_id = ''	--fill in the patient_id
+WHERE	patient_id = '518A1566-2A4A-42CE-ADED-445868576FD5'	--fill in the patient_id
 
 
 /*Intermediate Level (4-7)*/
