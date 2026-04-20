@@ -8,23 +8,30 @@ I initially broke down the problem into 4 different entities without the involve
 In order to improve and make this solution efficient,I added the below PROMPT to Claude SONNET 4.6 Model and it generated the Model in context to the problem definition/requirements provided in the PROMPT:
 ## PROMPT For Data Modeler
 
-Act as a Senior Data Modeler. 
-<context> Business rules: Create a model that allows people to track Tasks over time. People can be assigned to do a Task. A task can reoccur at a cadence of daily, weekly, monthly. Each occurrence of a task can have statuses: Not Started, In Progress, Completed (but not the Task itself) 
-</context> 
+"**Act as a Senior Data Modeler**. 
 
-<requirements>
-Normalize to 3NF.
-Use PostgreSQL syntax.
-Include audit columns (created_on, updated_on).
-Use Star Schema 
-</requirements>
-Make the generic Data Model around any person entity.
+&lt;**context**&gt;
+<br/>
+Business rules: Create a model that allows people to track Tasks over time. <br/>
+-People can be assigned to do a Task. <br/>
+-A task can reoccur at a cadence of daily, weekly, monthly. <br/>
+-Each occurrence of a task can have statuses: **Not Started, In Progress, Completed (but not the Task itself)**  <br/>
+&lt;/**context**&gt; 
 
-<output_format>
-Table definitions with keys.
-Brief justification for relationships.
-An ER Model Diagram that clearly satisfy the above requirements 
-</output_format>
+&lt;**requirements**&gt;
+<br/>
+-Use Star Schema<br/>
+-Include audit columns (created_on, updated_on).<br/>
+-Make the Data Model generic around any person entity. <br/>
+&lt;/**requirements**&gt;
+
+
+&lt;**output_format**&gt;
+<br/>
+-Table definitions with keys. <br/>
+-Brief justification for relationships. <br/>
+-An ER Model Diagram that clearly satisfy the above requirements
+&lt;/**output_format**&gt;" <br/>
 
 Utilizing this PROMPT, the model generated ER Diagram with expected entities, in addition to date and status dimension. However, the FACT tables were missing the audit columns in the first attempt of the PROMPT as I didn't include them in the requirements but later on when I verified the schema, I improved the prompt to add those as part of requirements. This was the only thing missing in the first PROMPT.
 The model also generated SEED input for the Diension tables which I am including in the DML Script.
