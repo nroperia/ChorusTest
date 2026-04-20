@@ -7,7 +7,7 @@ Write a query to return all patients who are active.
 */
 SELECT	*
 FROM	Patient
-WHERE	active = TRUE;
+WHERE	active = 1;		--TRUE for PostGres
 
 /*
 2. Find encounters for a specific patient
@@ -15,7 +15,7 @@ Given a patient_id, retrieve all encounters for that patient, including the stat
 ###NOT ORDER IN ANY PARTICULAR ORDER*/
 SELECT	patient_id, Status, encounter_date
 FROM	Encounter
-WHERE	patient_id = ?
+WHERE	patient_id = '' -- fill-in the patient_id
 
 /*
 3. List all observations recorded for a patient
@@ -23,7 +23,7 @@ Write a query to fetch all observations for a given patient_id, showing the obse
 ###NOT ORDER IN ANY PARTICULAR ORDER*/
 SELECT	patient_id, type as observation_type, value, unit, recorded_at as recorded_date
 FROM	Observation
-WHERE	patient_id = ?
+WHERE	patient_id = ''	--fill in the patient_id
 
 
 /*Intermediate Level (4-7)*/
@@ -69,7 +69,7 @@ ORDER BY COUNT(medication_name) DESC
 Write a query to find all practitioners who do not appear in the MedicationRequest table as a prescribing practitioner.*/
 SELECT	*
 FROM	Practitioner P
-		LEFT OUTER JOIN MedicationRequest R OM R.practitioner_id = P.practitioner_id
+		LEFT OUTER JOIN MedicationRequest R ON R.practitioner_id = P.id
 WHERE	R.practitioner_id IS NULL
 
 
@@ -84,7 +84,7 @@ Calculate the average number of encounters per patient, rounded to two decimal p
 	FROM	Encounter
 	GROUP BY patient_id
 )
-SELECT	ROUNT(AVG(TotalEnc), 2) as average_num_encounter
+SELECT	ROUND(AVG(TotalEnc), 2) as average_num_encounter
 FROM	encounter_counts_by_patient
 
 /*
@@ -92,8 +92,8 @@ FROM	encounter_counts_by_patient
 Write a query to find patients who have a record in the MedicationRequest table but no associated encounters in the Encounter table.*/
 SELECT	*
 FROM	Patient p
-		LEFT OUTER JOIN MedicationRequest MR ON p.patient_id = MR.patient_id
-		LEFT OUTER JOIN Encounter E on E.patient_id = p.patient_id
+		LEFT OUTER JOIN MedicationRequest MR ON p.id = MR.patient_id
+		LEFT OUTER JOIN Encounter E on E.patient_id = p.id
 WHERE	MR.patient_id IS NOT NULL
 		AND E.patient_id IS NULL
 
@@ -101,15 +101,15 @@ WHERE	MR.patient_id IS NOT NULL
 10. Determine patient retention by cohort
 Write a query to count how many patients had their first encounter in each month (YYYY-MM format) and still had at least one encounter in the following six months.
 ### NOT ORDERED*/
-WITH first_encounter AS (
+;WITH first_encounter AS (
 	SELECT	patient_id,
-			MIN(encounter_date) AS first_encounter_date,
+			MIN(encounter_date) AS first_encounter_date
 	FROM	Encounter
 	GROUP BY patient_id
 ),
 next_six_month_encounter AS(
 	SELECT	DISTINCT
-			patient_id,
+			FE.patient_id,
 			FORMAT(first_encounter_date, 'yyyy-MM') AS [first_encounter_date_month]
 	FROM	Encounter E
 			JOIN first_encounter FE on FE.patient_id = E.patient_id
